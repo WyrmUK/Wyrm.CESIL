@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Wyrm.CESIL.Lexical
 {
-    public class TokenRule
+    internal class TokenRule
     {
         public TokenType TokenType { get; set; }
         public TokenType[] PreceedingType { get; set; }

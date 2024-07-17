@@ -3,11 +3,12 @@ using Wyrm.CESIL.Exceptions;
 
 namespace Wyrm.CESIL.Executing
 {
-    public class OperationState
+    internal class OperationState : IOperationState
     {
         private readonly IList<long> dataSet;
         private readonly IDictionary<string, int> labels;
         private readonly Dictionary<string, long> stores = new Dictionary<string, long>();
+
         public OperationState(IList<long> dataSet, IDictionary<string, int> labels)
         {
             this.dataSet = dataSet;

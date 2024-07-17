@@ -1,33 +1,74 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using Wyrm.CESIL.Exceptions;
 
 namespace Wyrm.CESIL.Lexical
 {
+    /// <summary>
+    /// A Lexical Analyser class to analyse a program.
+    /// </summary>
     public class Analyser : ILexer
     {
-        private readonly ITokenMatcher tokenMatcher;
+        private const char QuoteChar = '"';
+        private static readonly char[] SpaceOrTab = new[] { ' ', '\t' };
+        private readonly ITokenMatcher _tokenMatcher;
 
+        /// <summary>
+        /// Creates a new <see cref="Analyser"/> instance.
+        /// </summary>
+        /// <param name="tokenMatcher">A Token Matcher implementing <see cref="ITokenMatcher"/>.</param>
         public Analyser(ITokenMatcher tokenMatcher)
         {
-            this.tokenMatcher = tokenMatcher;
+            _tokenMatcher = tokenMatcher;
         }
 
-        public IEnumerable<Token> Analyse(TextReader reader, IList<SyntaxError> errors, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        public IEnumerable<Token> Analyse(TextReader reader, IList<SyntaxError> errors)
         {
-            var tokens = new List<Token>(new[] { new Token(0, 0, TokenType.Eol, null) });
-            string line = null;
+            var tokens = InitialiseTokens();
+            string line;
             var lineNo = 0;
-            while ((line = reader.ReadLine()) != null && !cancellationToken.IsCancellationRequested)
+            while ((line = reader.ReadLine()) != null)
             {
                 ++lineNo;
-                tokens.AddRange(Analyse(lineNo, line, tokens[tokens.Count - 1], errors, cancellationToken));
+                tokens.AddRange(Analyse(lineNo, line, tokens[tokens.Count - 1], errors));
             }
             return tokens;
         }
 
-        private IEnumerable<Token> Analyse(int lineNo, string line, Token previousToken, IList<SyntaxError> errors, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        public async Task<IEnumerable<Token>> AnalyseAsync(TextReader reader, IList<SyntaxError> errors, CancellationToken cancellationToken)
+        {
+            var tokens = InitialiseTokens();
+            string line;
+            var lineNo = 0;
+            while ((line =
+#if NET8_0_OR_GREATER
+                await reader.ReadLineAsync(cancellationToken)
+#else
+                await reader.ReadLineAsync()
+#endif
+                ) != null)
+            {
+#if NET8_0_OR_GREATER
+#else
+                if (cancellationToken.IsCancellationRequested) throw new TaskCanceledException();
+#endif
+                ++lineNo;
+                tokens.AddRange(Analyse(lineNo, line, tokens[tokens.Count - 1], errors));
+            }
+            return tokens;
+        }
+
+        private static List<Token> InitialiseTokens() =>
+            new List<Token>
+            {
+                new Token(0, 0, TokenType.Eol, null)
+            };
+
+        private IEnumerable<Token> Analyse(int lineNo, string line, Token previousToken, IList<SyntaxError> errors)
         {
             var tokens = new List<Token>();
             for (var ind = 0; ind < line.Length; ++ind)
@@ -35,7 +76,7 @@ namespace Wyrm.CESIL.Lexical
                 if (char.IsWhiteSpace(line[ind])) continue;
                 try
                 {
-                    var tokenType = tokenMatcher.MatchToken(previousToken.TokenType, char.ToUpper(line[ind]), ind);
+                    var tokenType = _tokenMatcher.MatchToken(previousToken.TokenType, char.ToUpper(line[ind]), ind);
                     previousToken = new Token(lineNo, ind, tokenType, TokenValue(line, ind, tokenType));
                     tokens.Add(previousToken);
                     ind += previousToken.Value.Length - 1;
@@ -48,7 +89,6 @@ namespace Wyrm.CESIL.Lexical
                 {
                     errors.Add(new SyntaxError(lineNo, ind, "Unterminated string"));
                 }
-                if (cancellationToken.IsCancellationRequested) return tokens;
             }
             tokens.Add(new Token(lineNo, 0, TokenType.Eol, null));
             return tokens;
@@ -59,11 +99,11 @@ namespace Wyrm.CESIL.Lexical
             if (tokenType == TokenType.Comment) return line.ToUpper().Substring(start);
             else if (tokenType == TokenType.String)
             {
-                var endQuote = line.IndexOf('"', start + 1);
+                var endQuote = line.IndexOf(QuoteChar, start + 1);
                 if (endQuote < start) throw new UnterminatedStringException();
                 return line.Substring(start, endQuote + 1 - start);
             }
-            var end = line.IndexOfAny(new[] { ' ', '\t' }, start);
+            var end = line.IndexOfAny(SpaceOrTab, start);
             return (end < start ? line.Substring(start) : line.Substring(start, end - start)).ToUpper();
         }
     }

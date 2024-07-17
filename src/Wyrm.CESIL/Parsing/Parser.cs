@@ -1,21 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using Wyrm.CESIL.Exceptions;
 using Wyrm.CESIL.Lexical;
 
 namespace Wyrm.CESIL.Parsing
 {
+    /// <summary>
+    /// A Parser class to parse language tokens.
+    /// </summary>
     public class Parser : IParser
     {
-        private IInstructionBuilder builder;
+        private IInstructionBuilder _builder;
 
+        /// <summary>
+        /// Creates a new <see cref="Parser"/> instance.
+        /// </summary>
+        /// <param name="builder">An Instruction Builder that implements <see cref="IInstructionBuilder"/>.</param>
         public Parser(IInstructionBuilder builder)
         {
-            this.builder = builder;
+            _builder = builder;
         }
 
-        public IEnumerable<Instruction> Parse(IEnumerable<Token> tokens, IList<long> data, IList<SyntaxError> errors, CancellationToken cancellationToken)
+        /// <inheritdoc/>
+        public IEnumerable<Instruction> Parse(IEnumerable<Token> tokens, IList<long> data, IList<SyntaxError> errors)
         {
             List<Instruction> instructionSet = new List<Instruction>();
             Instruction instruction = null;
@@ -24,7 +31,7 @@ namespace Wyrm.CESIL.Parsing
             {
                 try
                 {
-                    if (!builder.BuildInstruction(token, ref instruction, isData) || instruction == null) continue;
+                    if (!_builder.BuildInstruction(token, ref instruction, isData) || instruction == null) continue;
                     if (isData) data.Add((long)instruction.Value);
                     else
                     {
@@ -69,7 +76,6 @@ namespace Wyrm.CESIL.Parsing
                 {
                     errors.Add(new SyntaxError(token.LineNo, token.CharNo, "Illegal variable or label"));
                 }
-                if (cancellationToken.IsCancellationRequested) break;
             }
             if (instruction != null) errors.Add(new SyntaxError(-1, -1, "Unterminated program"));
             return instructionSet;

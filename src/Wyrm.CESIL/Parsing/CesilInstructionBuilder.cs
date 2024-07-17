@@ -4,13 +4,12 @@ using Wyrm.CESIL.Lexical;
 
 namespace Wyrm.CESIL.Parsing
 {
+    /// <summary>
+    /// A class for building CESIL instructions.
+    /// </summary>
     public class CesilInstructionBuilder : IInstructionBuilder
     {
-        private readonly Dictionary<TokenType, BuildRule> rules;
-
-        public CesilInstructionBuilder()
-        {
-            rules = new Dictionary<TokenType, BuildRule>
+        private static readonly Dictionary<TokenType, BuildRule> _rules = new Dictionary<TokenType, BuildRule>
             {
                 { TokenType.Eol, new BuildRule { IsData = true, Ends = true } },
                 { TokenType.Comment, new BuildRule { StartsInstruction = true, InDataSection = true, Ends = true } },
@@ -21,12 +20,12 @@ namespace Wyrm.CESIL.Parsing
                 { TokenType.Instruction, new BuildRule { CreatesInstruction = true, IsInstruction = true } },
                 { TokenType.String, new BuildRule { AddsToInstruction = true, IsString = true } }
             };
-        }
 
+        /// <inheritdoc/>
         public bool BuildInstruction(Token token, ref Instruction instruction, bool isData)
         {
-            if (!rules.ContainsKey(token.TokenType)) throw new NotSupportedException();
-            return rules[token.TokenType].Build(isData, ref instruction, token);
+            if (!_rules.ContainsKey(token.TokenType)) throw new NotSupportedException();
+            return _rules[token.TokenType].Build(isData, ref instruction, token);
         }
     }
 }

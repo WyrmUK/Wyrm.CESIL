@@ -2,12 +2,23 @@
 An interpreter library for the CESIL language written as an excercise in writing interpreters.
 
 ## Getting Started
-TODO
-new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator()));
+A CESIL Intepreter instance can be created trivially as:
+```C#
+var interpreter = new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator(), new OperationStateFactory));
+```
+You can implement this in dependency injection by adding the following service/implementation types:
+|ITokenMatcher|CesilTokenRules|
+|ILexer|Analyser|
+|IInstructionBuilder|CesilInstructionBuilder|
+|IParser|Parser|
+|IOperator|CesilOperator|
+|IOperationStateFactory|OperationStateFactory|
+|IExecutor|Executor|
+|IInterpreter|Interpreter|
+Then simply inject IInterpreter into your class constructor.
 
 ## Introduction to CESIL
 CESIL (Computer Education in Schools Instruction Language) was an early attempt by ICL to introduce children to software development. It was prevalent in the late 60's and throughout the 70's. Essentially a very basic Assembly Language, it was excellent for getting children to learn how to do a lot with a few instructions.
-
 Any line in CESIL that starts with an asterisk is treated as a comment, as are any lines beginning with '('. A valid CESIL line of code is made up of an optional label, followed by a space (required), then followed by an instruction. There are 14 instructions in total that operate either on a single integer 'accumulator' or named stores (variables). Labels and stores must start with a letter and contain letters and digits only. After the last instruction there must be a '%' character on a new line which can then be followed by one or more new lines of space separated integer data values.
 
 ## CESIL Instructions

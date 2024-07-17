@@ -1,11 +1,12 @@
 ﻿using System;
 using Wyrm.CESIL.Exceptions;
+using Wyrm.CESIL.Executing;
 using Wyrm.CESIL.Extensions;
 using Wyrm.CESIL.Lexical;
 
 namespace Wyrm.CESIL.Parsing
 {
-    public class BuildRule
+    internal class BuildRule
     {
         public bool IsData { get; set; }
         public bool CanBeData { get; set; }
@@ -50,7 +51,7 @@ namespace Wyrm.CESIL.Parsing
                 if (instruction.Value != null)
                 {
                     if (!(instruction.Value is string)) throw new SyntaxException();
-                    if (!((string)instruction.Value).StartsWith("\"") || !((string)instruction.Value).EndsWith("\"")) throw new BadStringException();
+                    if (!((string)instruction.Value).StartsWith(PrintOperation.DoubleQuotes) || !((string)instruction.Value).EndsWith(PrintOperation.DoubleQuotes)) throw new BadStringException();
                     instruction.Value = ((string)instruction.Value) + token.Value;
                 }
                 else instruction.Value = token.Value;
