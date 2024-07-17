@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wyrm.CESIL", "src\Wyrm.CESIL\Wyrm.CESIL.csproj", "{026AA2F2-C933-4B68-B894-5F235BDF8FA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wyrm.CESIL.UnitTests", "tests\Wyrm.CESIL.UnitTests\Wyrm.CESIL.UnitTests.csproj", "{ED660185-8A68-403E-85CB-73AE34A03D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wyrm.CESIL.IntegrationTests", "Wyrm.CESIL.IntegrationTests\Wyrm.CESIL.IntegrationTests.csproj", "{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{026AA2F2-C933-4B68-B894-5F235BDF8FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{026AA2F2-C933-4B68-B894-5F235BDF8FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{026AA2F2-C933-4B68-B894-5F235BDF8FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{026AA2F2-C933-4B68-B894-5F235BDF8FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED660185-8A68-403E-85CB-73AE34A03D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED660185-8A68-403E-85CB-73AE34A03D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED660185-8A68-403E-85CB-73AE34A03D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED660185-8A68-403E-85CB-73AE34A03D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92B92738-7804-4850-BDA6-DB701581DAB3}
+	EndGlobalSection
+EndGlobal

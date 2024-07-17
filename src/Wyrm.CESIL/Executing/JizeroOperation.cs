@@ -1,0 +1,18 @@
+﻿using System.IO;
+using Wyrm.CESIL.Exceptions;
+
+namespace Wyrm.CESIL.Executing
+{
+    internal class JizeroOperation : IOperation
+    {
+        public void Execute(object value, OperationState state, TextWriter writer)
+        {
+            if (state.Accumulator == 0)
+            {
+                if (value is string) state.Instruction = state.InstructionFor((string)value);
+                else throw new IllegalOperationException("Unknown data type for JIZERO.");
+            }
+            else ++state.Instruction;
+        }
+    }
+}
