@@ -1,0 +1,6 @@
+legacy-semver-padding: 0
+build-metadata-padding: 0
+mode: ContinuousDelivery
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{CommitsSinceVersionSource}'
+assembly-informational-format: '{Major}.{Minor}.{Patch}.{CommitsSinceVersionSource}+{Sha}'

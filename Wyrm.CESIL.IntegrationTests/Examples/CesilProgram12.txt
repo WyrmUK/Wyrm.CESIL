@@ -1,0 +1,41 @@
+﻿** Factorial
+** Author: Wyrm Software
+LOOP IN
+     JINEG ENDD
+     OUT
+     PRINT "! = "
+     JIZERO ZERO
+     STORE NUM
+FACT STORE FAC
+     LOAD NUM
+     SUBTRACT 1
+     STORE NUM
+     JIZERO PRNT
+     MULTIPLY FAC
+     JUMP FACT
+PRNT LOAD FAC
+     OUT
+     JUMP NEWL
+ZERO PRINT "1"
+NEWL LINE
+     JUMP LOOP
+ENDD HALT
+%
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+-1
