@@ -23,6 +23,8 @@ CESIL (Computer Education in Schools Instruction Language) was an early attempt 
 Any line in CESIL that starts with an asterisk is treated as a comment, as are any lines beginning with '('. A valid CESIL line of code is made up of an optional label, followed by a space (required), then followed by an instruction. There are 14 instructions in total that operate either on a single integer 'accumulator' or named stores (variables). Labels and stores must start with a letter and contain letters and digits only. After the last instruction there must be a '%' character on a new line which can then be followed by one or more new lines of space separated integer data values.
 
 ## CESIL Instructions
+|Instruction|Description|
+|--|--|
 |IN|Read data item into accumulator.|
 |OUT|Print content of accumulator.|
 |LOAD VALUE|Load accumulator with an integer constant or from a named store.|
@@ -39,6 +41,7 @@ Any line in CESIL that starts with an asterisk is treated as a comment, as are a
 |HALT|Stop execution.|
 
 ## Example Program
+```
 ** Squares
 ** Example Program
 LOOP IN
@@ -55,3 +58,4 @@ END  HALT
 5 72 111
 67 -1
 *
+```
