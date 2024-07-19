@@ -48,7 +48,7 @@ namespace Wyrm.CESIL
         }
 
         /// <inheritdoc/>
-        public void Run(TextWriter writer, TimeSpan? maxRunTime)
+        public void Run(TextWriter writer, Func<bool> terminate)
         {
             _executor.Prepare(_instructionSet, _errors);
             if (_errors.Count > 0)
@@ -61,12 +61,12 @@ namespace Wyrm.CESIL
                 }
                 return;
             }
-            _executor.Run(_dataSet, writer, maxRunTime);
+            _executor.Run(_dataSet, writer, terminate);
             writer.Flush();
         }
 
         /// <inheritdoc/>
-        public async Task RunAsync(TextWriter writer, TimeSpan? maxRunTime, CancellationToken cancellationToken)
+        public async Task RunAsync(TextWriter writer, Func<bool> terminate, CancellationToken cancellationToken)
         {
             _executor.Prepare(_instructionSet, _errors);
             if (_errors.Count > 0)
@@ -79,7 +79,7 @@ namespace Wyrm.CESIL
                 }
                 return;
             }
-            await _executor.RunAsync(_dataSet, writer, maxRunTime, cancellationToken);
+            await _executor.RunAsync(_dataSet, writer, terminate, cancellationToken);
             writer.Flush();
         }
     }
