@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,13 +24,15 @@ namespace Wyrm.CESIL
         /// </summary>
         /// <param name="dataSet">An <see cref="IList{T}"/> of <see cref="long"/> data values to run over.</param>
         /// <param name="writer">A <see cref="TextWriter"/> to write the output to.</param>
-        void Run(IList<long> dataSet, TextWriter writer);
+        /// <param name="maxRunTime">The maximum amount of time the program will be allowed to run for. Null = no limit.</param>
+        void Run(IList<long> dataSet, TextWriter writer, TimeSpan? maxRunTime);
         /// <summary>
         /// Runs the instructions and writes the output to a <see cref="TextWriter"/> asynchronously.
         /// </summary>
         /// <param name="dataSet">An <see cref="IList{T}"/> of <see cref="long"/> data values to run over.</param>
         /// <param name="writer">A <see cref="TextWriter"/> to write the output to.</param>
+        /// <param name="maxRunTime">The maximum amount of time the program will be allowed to run for. Null = no limit.</param>
         /// <param name="cancellationToken">A token to cancel the run.</param>
-        Task RunAsync(IList<long> dataSet, TextWriter writer, CancellationToken cancellationToken);
+        Task RunAsync(IList<long> dataSet, TextWriter writer, TimeSpan? maxRunTime, CancellationToken cancellationToken);
     }
 }
