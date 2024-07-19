@@ -25,14 +25,14 @@ namespace Wyrm.CESIL
         /// Runs a loaded program writing the output to a <see cref="TextWriter"/>.
         /// </summary>
         /// <param name="writer">A <see cref="TextWriter"/> to write the output to.</param>
-        /// <param name="maxRunTime">The maximum amount of time the program will be allowed to run for. Null = no limit.</param>
-        void Run(TextWriter writer, TimeSpan? maxRunTime = null);
+        /// <param name="terminate">Optional function that returns true when the execution should be terminated.</param>
+        void Run(TextWriter writer, Func<bool> terminate = null);
         /// <summary>
         /// Runs a loaded program writing the output to a <see cref="TextWriter"/> asynchronously.
         /// </summary>
         /// <param name="writer">A <see cref="TextWriter"/> to write the output to.</param>
-        /// <param name="maxRunTime">The maximum amount of time the program will be allowed to run for. Null = no limit.</param>
+        /// <param name="terminate">Optional function that returns true when the execution should be terminated.</param>
         /// <param name="cancellationToken">An optional token to cancel the run.</param>
-        Task RunAsync(TextWriter writer, TimeSpan? maxRunTime = null, CancellationToken cancellationToken = default);
+        Task RunAsync(TextWriter writer, Func<bool> terminate = null, CancellationToken cancellationToken = default);
     }
 }
