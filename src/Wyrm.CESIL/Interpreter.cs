@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace Wyrm.CESIL
         }
 
         /// <inheritdoc/>
-        public void Run(TextWriter writer)
+        public void Run(TextWriter writer, TimeSpan? maxRunTime)
         {
             _executor.Prepare(_instructionSet, _errors);
             if (_errors.Count > 0)
@@ -60,12 +61,12 @@ namespace Wyrm.CESIL
                 }
                 return;
             }
-            _executor.Run(_dataSet, writer);
+            _executor.Run(_dataSet, writer, maxRunTime);
             writer.Flush();
         }
 
         /// <inheritdoc/>
-        public async Task RunAsync(TextWriter writer, CancellationToken cancellationToken)
+        public async Task RunAsync(TextWriter writer, TimeSpan? maxRunTime, CancellationToken cancellationToken)
         {
             _executor.Prepare(_instructionSet, _errors);
             if (_errors.Count > 0)
@@ -78,7 +79,7 @@ namespace Wyrm.CESIL
                 }
                 return;
             }
-            await _executor.RunAsync(_dataSet, writer, cancellationToken);
+            await _executor.RunAsync(_dataSet, writer, maxRunTime, cancellationToken);
             writer.Flush();
         }
     }

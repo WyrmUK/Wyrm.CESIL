@@ -16,12 +16,15 @@ You can implement this in dependency injection by adding the following service/i
 |IExecutor|Executor|
 |IInterpreter|Interpreter|
 Then simply inject IInterpreter into your class constructor.
+You call the Load method to load the program. Then you can call the Run method to run it.
 
 ## Introduction to CESIL
 CESIL (Computer Education in Schools Instruction Language) was an early attempt by ICL to introduce children to software development. It was prevalent in the late 60's and throughout the 70's. Essentially a very basic Assembly Language, it was excellent for getting children to learn how to do a lot with a few instructions.
 Any line in CESIL that starts with an asterisk is treated as a comment, as are any lines beginning with '('. A valid CESIL line of code is made up of an optional label, followed by a space (required), then followed by an instruction. There are 14 instructions in total that operate either on a single integer 'accumulator' or named stores (variables). Labels and stores must start with a letter and contain letters and digits only. After the last instruction there must be a '%' character on a new line which can then be followed by one or more new lines of space separated integer data values.
 
 ## CESIL Instructions
+|Instruction|Description|
+|--|--|
 |IN|Read data item into accumulator.|
 |OUT|Print content of accumulator.|
 |LOAD VALUE|Load accumulator with an integer constant or from a named store.|
@@ -38,6 +41,7 @@ Any line in CESIL that starts with an asterisk is treated as a comment, as are a
 |HALT|Stop execution.|
 
 ## Example Program
+```
 ** Squares
 ** Example Program
 LOOP IN
@@ -54,3 +58,4 @@ END  HALT
 5 72 111
 67 -1
 *
+```

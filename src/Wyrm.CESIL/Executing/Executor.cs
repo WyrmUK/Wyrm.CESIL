@@ -48,9 +48,10 @@ namespace Wyrm.CESIL.Executing
         }
 
         /// <inheritdoc/>
-        public void Run(IList<long> dataSet, TextWriter writer)
+        public void Run(IList<long> dataSet, TextWriter writer, TimeSpan? maxRunTime)
         {
             var state = _operationStateFactory.CreateOperationState(dataSet, _labels);
+            var started = DateTime.UtcNow;
             try
             {
                 try
@@ -58,6 +59,7 @@ namespace Wyrm.CESIL.Executing
                     while (!state.Halted)
                     {
                         _operations.Operate(_instructionSet[state.Instruction], state, writer);
+                        if (maxRunTime.HasValue && started + maxRunTime.Value < DateTime.UtcNow) throw new TimeoutException();
                     }
                 }
                 catch (IllegalOperationException ex)
@@ -72,6 +74,10 @@ namespace Wyrm.CESIL.Executing
                 {
                     writer.WriteLine($"Uninitialised store at line {_instructionSet[state.Instruction].LineNo}.");
                 }
+                catch (TimeoutException)
+                {
+                    writer.WriteLine($"Timed out at line {_instructionSet[state.Instruction].LineNo}.");
+                }
             }
             catch (Exception ex)
             {
@@ -80,9 +86,10 @@ namespace Wyrm.CESIL.Executing
         }
 
         /// <inheritdoc/>
-        public async Task RunAsync(IList<long> dataSet, TextWriter writer, CancellationToken cancellationToken)
+        public async Task RunAsync(IList<long> dataSet, TextWriter writer, TimeSpan? maxRunTime, CancellationToken cancellationToken)
         {
             var state = new OperationState(dataSet, _labels);
+            var started = DateTime.UtcNow;
             try
             {
                 try
@@ -90,6 +97,7 @@ namespace Wyrm.CESIL.Executing
                     while (!state.Halted && !cancellationToken.IsCancellationRequested)
                     {
                         await _operations.OperateAsync(_instructionSet[state.Instruction], state, writer, cancellationToken);
+                        if (maxRunTime.HasValue && started + maxRunTime.Value < DateTime.UtcNow) throw new TimeoutException();
                     }
                 }
                 catch (IllegalOperationException ex)
@@ -113,6 +121,15 @@ namespace Wyrm.CESIL.Executing
                 catch (NotInitialisedException)
                 {
                     var error = $"Uninitialised store at line {_instructionSet[state.Instruction].LineNo}.";
+#if NET6_0_OR_GREATER
+                    await writer.WriteLineAsync(error.ToStringBuilder(), cancellationToken);
+#else
+                    writer.WriteLine(error);
+#endif
+                }
+                catch (TimeoutException)
+                {
+                    var error = $"Timed out at line {_instructionSet[state.Instruction].LineNo}.";
 #if NET6_0_OR_GREATER
                     await writer.WriteLineAsync(error.ToStringBuilder(), cancellationToken);
 #else
