@@ -30,7 +30,7 @@ public class InterpreterIntegrationTests
     private readonly IInterpreter _interpreter = new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator(), new OperationStateFactory()));
 
     private static TextReader ProgramReader(string filename) =>
-        File.OpenText($"Examples\\{filename}.txt");
+        File.OpenText($"Examples/{filename}.txt");
 
     private readonly StringWriter Writer = new StringWriter();
 
