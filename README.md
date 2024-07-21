@@ -4,7 +4,7 @@ An interpreter library for the CESIL language written as an excercise in writing
 ## Getting Started
 A CESIL Intepreter instance can be created trivially as:
 ```C#
-var interpreter = new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator(), new OperationStateFactory));
+var interpreter = new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator(), new OperationStateFactory()));
 ```
 You can implement this in dependency injection by adding the following service/implementation types:
 |ITokenMatcher|CesilTokenRules|
