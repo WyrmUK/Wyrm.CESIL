@@ -30,7 +30,7 @@ public class CesilInstructionBuilderTests
     {
         { new Token(1, 1, TokenType.Eol, "\r\n"), false, true, true, new Instruction(1) },
         { new Token(2, 1, TokenType.Comment, "** Comment"), false, false, true, null },
-        { new Token(3, 1, TokenType.End, "*"), false, false, true, new Instruction(3) },
+        { new Token(3, 1, TokenType.End, "%"), false, false, true, new Instruction(3) },
         { new Token(4, 1, TokenType.Integer, "10" ), true, false, true, new Instruction(4) { Value = 10L } },
         { new Token(5, 1, TokenType.Label, "LBL"), false, false, false, new Instruction(5) { Label = "LBL" } },
         { new Token(6, 1, TokenType.Variable, "VAR"), false, true, false, new Instruction(6) { Value = "VAR" } },
