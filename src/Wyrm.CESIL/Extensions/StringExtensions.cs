@@ -11,12 +11,12 @@ namespace Wyrm.CESIL.Extensions
         {
             if (string.IsNullOrEmpty(val)) return false;
             if (!char.IsLetter(val[0])) return false;
-            return val.ToCharArray().All(c => char.IsLetterOrDigit(c));
+            return val.ToCharArray().All(char.IsLetterOrDigit);
         }
 
 #if NET6_0_OR_GREATER
         public static StringBuilder ToStringBuilder(this string val)
-            => new StringBuilder(val);
+            => new(val);
 #endif
     }
 }
