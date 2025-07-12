@@ -6,7 +6,8 @@ public static class StringWriterExtensions
 {
     public static void ShouldHaveWritten(this StringWriter writer, string filename)
     {
-        File.OpenText($"Examples/{filename}.out").ReadToEnd()
-            .ShouldBe(writer.GetStringBuilder().ToString());
+        writer.GetStringBuilder().ToString().Replace("\r", "")
+            .ShouldBe(File.OpenText($"Examples/{filename}.out").ReadToEnd()
+                .Replace("\r", ""));
     }
 }

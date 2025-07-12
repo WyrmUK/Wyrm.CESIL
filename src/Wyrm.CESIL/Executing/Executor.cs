@@ -87,7 +87,7 @@ namespace Wyrm.CESIL.Executing
         /// <inheritdoc/>
         public async Task RunAsync(IList<long> dataSet, TextWriter writer, Func<bool> terminate, CancellationToken cancellationToken)
         {
-            var state = new OperationState(dataSet, _labels);
+            var state = _operationStateFactory.CreateOperationState(dataSet, _labels);
             try
             {
                 try
