@@ -6,7 +6,7 @@ using Wyrm.CESIL.Parsing;
 
 namespace Wyrm.CESIL.UnitTests.Parsing;
 
-public class ParserTests
+public class ParserUnitTests
 {
     [Fact]
     public void Parse_Should_Parse_Tokens()

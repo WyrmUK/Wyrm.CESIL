@@ -4,7 +4,7 @@ using Wyrm.CESIL.Parsing;
 
 namespace Wyrm.CESIL.UnitTests.Parsing;
 
-public class CesilInstructionBuilderTests
+public class CesilInstructionBuilderUnitTests
 {
     [Fact]
     public void BuildInstruction_Should_Throw_NotSupportedException_If_Token_Not_Supported()
