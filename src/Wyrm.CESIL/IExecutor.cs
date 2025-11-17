@@ -34,5 +34,9 @@ namespace Wyrm.CESIL
         /// <param name="terminate">Optional function that returns true when the execution should be terminated.</param>
         /// <param name="cancellationToken">A token to cancel the run.</param>
         Task RunAsync(IList<long> dataSet, TextWriter writer, Func<bool> terminate, CancellationToken cancellationToken);
+        /// <summary>
+        /// Clears the program and data ready to run a new/updated program.
+        /// </summary>
+        void Clear();
     }
 }

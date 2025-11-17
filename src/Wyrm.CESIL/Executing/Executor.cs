@@ -154,5 +154,12 @@ namespace Wyrm.CESIL.Executing
 #endif
             }
         }
+
+        /// <inheritdoc/>
+        public void Clear()
+        {
+            _instructionSet.Clear();
+            _labels.Clear();
+        }
     }
 }

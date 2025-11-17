@@ -25,6 +25,18 @@ public class InterpreterIntegrationTests
         Writer.ShouldHaveWritten(filename);
     }
 
+    [Theory]
+    [MemberData(nameof(ProgramFileTheoryData))]
+    public async Task Clear_Should_Clear_Program_And_Data(string filename)
+    {
+        _interpreter.Load(ProgramReader(filename));
+        _interpreter.Run(new StringWriter(), () => false);
+        _interpreter.Clear();
+        await _interpreter.LoadAsync(ProgramReader(filename));
+        await _interpreter.RunAsync(Writer, () => false);
+        Writer.ShouldHaveWritten(filename);
+    }
+
     #region Test Helpers
 
     private readonly IInterpreter _interpreter = new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator(), new OperationStateFactory()));
