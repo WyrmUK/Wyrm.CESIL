@@ -1,6 +1,10 @@
-legacy-semver-padding: 0
-build-metadata-padding: 0
 mode: ContinuousDelivery
 assembly-versioning-scheme: MajorMinorPatch
-assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{CommitsSinceVersionSource}'
-assembly-informational-format: '{Major}.{Minor}.{Patch}.{CommitsSinceVersionSource}+{Sha}'
+assembly-file-versioning-format: '{MajorMinorPatch}.{CommitsSinceVersionSource}'
+assembly-informational-format: '{MajorMinorPatch}.{CommitsSinceVersionSource}+{Sha}'
+branches:
+  main:
+    increment: Minor
+    is-release-branch: true
+  develop:
+    track-merge-target: true

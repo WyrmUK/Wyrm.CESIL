@@ -82,5 +82,14 @@ namespace Wyrm.CESIL
             await _executor.RunAsync(_dataSet, writer, terminate, cancellationToken);
             writer.Flush();
         }
+
+        /// <inheritdoc/>
+        public void Clear()
+        {
+            _instructionSet.Clear();
+            _dataSet.Clear();
+            _errors.Clear();
+            _executor.Clear();
+        }
     }
 }

@@ -4,19 +4,35 @@ An interpreter library for the CESIL language written as an excercise in writing
 ## Getting Started
 A CESIL Intepreter instance can be created trivially as:
 ```C#
-var interpreter = new Interpreter(new Analyser(new CesilTokenRules()), new Parser(new CesilInstructionBuilder()), new Executor(new CesilOperator(), new OperationStateFactory()));
+using Wyrm.CESIL;
+using Wyrm.CESIL.Executing;
+using Wyrm.CESIL.Lexical;
+using Wyrm.CESIL.Parsing;
+...
+var interpreter = new Interpreter(
+    new Analyser(new CesilTokenRules()),
+    new Parser(new CesilInstructionBuilder()),
+    new Executor(new CesilOperator(), new OperationStateFactory()));
 ```
-You can implement this in dependency injection by adding the following service/implementation types:
-|ITokenMatcher|CesilTokenRules|
-|ILexer|Analyser|
-|IInstructionBuilder|CesilInstructionBuilder|
-|IParser|Parser|
-|IOperator|CesilOperator|
-|IOperationStateFactory|OperationStateFactory|
-|IExecutor|Executor|
-|IInterpreter|Interpreter|
+Which you'd typically call in a factory method.
+You can also implement this in dependency injection by adding the following service/implementation types:
+
+| Service | Implementation |
+| :--- | :--- |
+| ITokenMatcher | CesilTokenRules |
+| ILexer | Analyser |
+| IInstructionBuilder | CesilInstructionBuilder |
+| IParser | Parser |
+| IOperator | CesilOperator |
+| IOperationStateFactory | OperationStateFactory |
+| IExecutor | Executor |
+| IInterpreter | Interpreter |
+
 Then simply inject IInterpreter into your class constructor.
-You call the Load method to load the program. Then you can call the Run method to run it.
+
+You call the Load method to load the program (and data). Then you can call the Run method to run it.
+If you call Load again then it will append to the existing program. This is useful if you have data separate to the program.
+To clear the program and data you can call the Clear method.
 
 ## Introduction to CESIL
 CESIL (Computer Education in Schools Instruction Language) was an early attempt by ICL to introduce children to software development. It was prevalent in the late 60's and throughout the 70's. Essentially a very basic Assembly Language, it was excellent for getting children to learn how to do a lot with a few instructions.

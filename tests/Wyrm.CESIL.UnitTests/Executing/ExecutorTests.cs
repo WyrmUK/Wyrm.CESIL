@@ -194,6 +194,17 @@ namespace Wyrm.CESIL.UnitTests.Executing
                 .Verify(x => x.WriteLineAsync(It.IsAny<StringBuilder>(), CancellationToken), Times.Once);
         }
 
+        [Fact]
+        public void Clear_Should_Clear_Instructions_And_Errors()
+        {
+            InitialiseMocks();
+            var executor = new Executor(_operator, _operationStateFactory);
+            executor.Prepare(_instructions, _errors);
+            executor.Clear();
+            Mock.Get(_instructions)
+                .Verify(x => x.Clear(), Times.Once);
+        }
+
         #region Test Data
 
         private static readonly Instruction InstructionWithLabel = new(1)
