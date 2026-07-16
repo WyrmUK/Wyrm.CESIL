@@ -20,8 +20,8 @@ public class InterpreterIntegrationTests
     [MemberData(nameof(ProgramFileTheoryData))]
     public async Task LoadAsync_And_RunAsync_Should_Get_Correct_Results(string filename)
     {
-        await _interpreter.LoadAsync(ProgramReader(filename));
-        await _interpreter.RunAsync(Writer, () => false);
+        await _interpreter.LoadAsync(ProgramReader(filename), TestCancellationToken);
+        await _interpreter.RunAsync(Writer, () => false, TestCancellationToken);
         Writer.ShouldHaveWritten(filename);
     }
 
@@ -32,8 +32,8 @@ public class InterpreterIntegrationTests
         _interpreter.Load(ProgramReader(filename));
         _interpreter.Run(new StringWriter(), () => false);
         _interpreter.Clear();
-        await _interpreter.LoadAsync(ProgramReader(filename));
-        await _interpreter.RunAsync(Writer, () => false);
+        await _interpreter.LoadAsync(ProgramReader(filename), TestCancellationToken);
+        await _interpreter.RunAsync(Writer, () => false, TestCancellationToken);
         Writer.ShouldHaveWritten(filename);
     }
 
@@ -45,6 +45,8 @@ public class InterpreterIntegrationTests
         File.OpenText($"Examples/{filename}.txt");
 
     private readonly StringWriter Writer = new StringWriter();
+
+    private CancellationToken TestCancellationToken => TestContext.Current.CancellationToken;
 
     #endregion
 
