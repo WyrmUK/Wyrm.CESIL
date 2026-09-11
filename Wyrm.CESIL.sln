@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.35027.167
+# Visual Studio Version 18
+VisualStudioVersion = 18.10.12201.205 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wyrm.CESIL", "src\Wyrm.CESIL\Wyrm.CESIL.csproj", "{026AA2F2-C933-4B68-B894-5F235BDF8FA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wyrm.CESIL.UnitTests", "tests\Wyrm.CESIL.UnitTests\Wyrm.CESIL.UnitTests.csproj", "{ED660185-8A68-403E-85CB-73AE34A03D45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wyrm.CESIL.IntegrationTests", "tests\Wyrm.CESIL.IntegrationTests\Wyrm.CESIL.IntegrationTests.csproj", "{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06DF30C4-86A5-48B8-B390-D4C78207B43F}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E58C0C43-4360-40F0-9F59-91C5869619B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +38,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED660185-8A68-403E-85CB-73AE34A03D45} = {E58C0C43-4360-40F0-9F59-91C5869619B7}
+		{C4F5BA2C-1CD0-4817-8F62-61B8A353EDFD} = {E58C0C43-4360-40F0-9F59-91C5869619B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92B92738-7804-4850-BDA6-DB701581DAB3}
