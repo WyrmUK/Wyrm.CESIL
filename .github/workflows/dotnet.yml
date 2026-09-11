@@ -30,12 +30,12 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --configuration Release --verbosity detailed --results-directory "TestResults-${{ matrix.dotnet-version }}"
+      run: dotnet test --no-build --configuration Release --verbosity diagnostic --results-directory "./TestResults-${{ matrix.dotnet-version }}"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v6
       with:
         name: dotnet-results-${{ matrix.dotnet-version }}
-        path: TestResults-${{ matrix.dotnet-version }}
+        path: ./TestResults-${{ matrix.dotnet-version }}
       if: ${{ always() }}
     - name: Pack
       run: dotnet pack src/Wyrm.CESIL/Wyrm.CESIL.csproj --no-restore --configuration Release --output "Build-${{ matrix.dotnet-version }}"
